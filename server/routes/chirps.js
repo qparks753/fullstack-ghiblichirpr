@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 import db from '../db';
-// const db = require('../db');
+
 // const chirpsStore = require("../chirpstore.js");
 // no more chirpstore! install mysql from npm and configure the routes to use that instead of chirpstore.
 
@@ -9,7 +9,9 @@ import db from '../db';
 
 router.get('/', async (req,res)=>{
     try { 
-      res.json(await db.chirps.all()) ; 
+    //   
+    res.json(await db.chirps.all());
+
     } catch (error) {
         console.log(` error:${e}`);
         res.sendStatus(500);
@@ -31,7 +33,7 @@ router.post("/", async (req, res) => {
      const body = req.body;
     
     try {
-        res.json(await db.chirps.insert(body.userid,body.content,body.location));
+        res.json( await db.chirps.insert(body.userid,body.content,body.location));
         // res.send("This was Successful");
     } catch (error) {
         console.log(error);
@@ -43,7 +45,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async(req, res) => {
     const id = req.params.id;
     try {
-        res.json(await db.chirps.remove(id));
+        res.json(await db.chirps.remove(id)); 
         res.status(200);
     } catch (error) {
         console.log(error);
@@ -56,7 +58,8 @@ router.put("/:id", async(req, res) => {
     const id = req.params.id;
     const body = req.body;
     try {
-        res.json(await db.chirps.update(id,body))
+        // const up = await db.chirps.update(id,body.content);
+        res.json(await db.chirps.update(id,body.content));
         res.sendStatus(200);
     } catch (error) {
         console.log(error);
